@@ -35,8 +35,20 @@ class PostTypeColumnSupport {
 			add_filter( "manage_{$post_type}_posts_columns", [ $this, 'update_post_columns' ], 10000 );
 			add_action( "manage_{$post_type}_pages_custom_column", [ $this, 'update_post_column_value' ], 10, 2 );
 			add_action( "manage_{$post_type}_posts_custom_column", [ $this, 'update_post_column_value' ], 10, 2 );
+			add_filter( "manage_edit-post_sortable_columns", [ $this, 'editor_sortable_column'], 10, 1 );
 		}
 	}
+
+	/**
+	 * Adds editor table sorting column for a posts screen.
+	 *
+	 * @param array $sortable_columns List of sortable columns
+	 * @return array
+	 */
+	public function editor_sortable_column( $sortable_columns ) {
+		$sortable_columns['editor'] = 'editor'; 
+		return $sortable_columns;
+	}	
 
 	/**
 	 * Only register if in an admin context.
